@@ -6,11 +6,8 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
-
 import java.util.Locale;
-
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 
 public class DataGenerator {
@@ -24,7 +21,7 @@ public class DataGenerator {
 
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
-            .setPort(7777)
+            .setPort(9999)
             .setAccept(ContentType.JSON)
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
