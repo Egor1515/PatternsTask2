@@ -1,6 +1,10 @@
+import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.testmode.data.DataGenerator.Registration.getRegisteredUser;
@@ -21,8 +25,9 @@ class AuthTest {
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
         $("[data-test-id='login'] input").setValue("vasya");
-        $("[data-test-id='password'] input").setValue("password");
+        $("[data-test-id='password'] input").setValue("123");
         $(".button[role='button']").click();
+        $(".heading").should(Condition.visible, Duration.ofSeconds(15));
 
     }
 
@@ -30,8 +35,8 @@ class AuthTest {
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
         var notRegisteredUser = getUser("active");
-        $("[data-test-id='login'] input").setValue("vasya");
-        $("[data-test-id='password'] input").setValue("password");
+        $("[data-test-id='login'] input").setValue("oleg");
+        $("[data-test-id='password'] input").setValue("p124d");
         $(".button[role='button']").click();
 
     }
@@ -40,8 +45,8 @@ class AuthTest {
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
-        $("[data-test-id='login'] input").setValue("vasya");
-        $("[data-test-id='password'] input").setValue("password");
+        $("[data-test-id='login'] input").setValue("hello");
+        $("[data-test-id='password'] input").setValue("world");
         $(".button[role='button']").click();
 
     }
