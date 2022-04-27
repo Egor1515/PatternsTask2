@@ -12,15 +12,24 @@ import java.util.Locale;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
+
 public class DataGenerator {
+
+    @Value
+    public static class RegistrationDto {
+        String login;
+        String password;
+        String status;
+    }
+
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
-            .setPort(9999)
+            .setPort(7777)
             .setAccept(ContentType.JSON)
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
             .build();
-    private static final Faker faker = new Faker(new Locale("en"));
+    private static final Faker faker = new Faker(new Locale("ru"));
 
     private DataGenerator() {
     }
@@ -28,12 +37,11 @@ public class DataGenerator {
     private static void sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
-                .body(new RegistrationDto("vasya", "123123", "active"));
-        when()
-                .post("api/system/users")
+                .body(new RegistrationDto("vasya", "password", "active"))
+                .when()
+                .post("/api/system/users")
                 .then()
                 .statusCode(200);
-
     }
 
     public static String getRandomLogin() {
@@ -63,19 +71,18 @@ public class DataGenerator {
 
         public static RegistrationDto notRegisteredUser(String status) {
             var notRegisteredUser = getUser("active");
+
             return notRegisteredUser;
+
         }
 
         public static RegistrationDto blockedUser(String status) {
             var notRegisteredUser = getUser("blocked");
             return notRegisteredUser;
-        }
-    }
 
-    @Value
-    public static class RegistrationDto {
-        String login;
-        String password;
-        String status;
+        }
+
+
     }
 }
+
