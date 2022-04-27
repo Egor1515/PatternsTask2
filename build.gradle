@@ -13,22 +13,22 @@ compileTestJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
-}
 
+}
 dependencies {
-    testImplementation 'com.codeborne:selenide:6.4.0'
-    testImplementation("io.github.bonigarcia:webdrivermanager:5.1.1")
-    implementation 'org.projectlombok:lombok:1.18.22'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation 'io.rest-assured:rest-assured:4.3.0'
-    testImplementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'com.github.javafaker:javafaker:1.0.2'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation 'com.codeborne:selenide:6.3.5'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'io.rest-assured:rest-assured:4.3.3'
+    testImplementation 'com.google.code.gson:gson:2.8.6'
 
 }
 
 test {
     useJUnitPlatform()
     systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-
 }
