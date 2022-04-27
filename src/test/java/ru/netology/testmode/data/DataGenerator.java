@@ -60,13 +60,15 @@ public class DataGenerator {
             sendRequest(registeredUser);
             return registeredUser;
         }
-        public static RegistrationDto notRegisteredUser (String status) {
+
+        public static RegistrationDto notRegisteredUser(String status) {
             var notRegisteredUser = getUser("active");
-return notRegisteredUser;
+            return notRegisteredUser;
         }
-        public static RegistrationDto blockedUser (String status) {
+
+        public static RegistrationDto blockedUser(String status) {
             var notRegisteredUser = getUser("blocked");
-return notRegisteredUser;
+            return notRegisteredUser;
         }
     }
 
