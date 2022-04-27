@@ -7,11 +7,18 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
 
+<<<<<<< HEAD
 
 import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.$;
 import static io.restassured.RestAssured.given;
+=======
+import java.util.Locale;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+>>>>>>> 4d61a42d42d57956668eae3016ab195a662c601b
 
 public class DataGenerator {
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
@@ -29,6 +36,7 @@ public class DataGenerator {
     private static void sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
+<<<<<<< HEAD
                 .body(new RegistrationDto("vasya", "password", "active"))
                 .when() // "когда"
                 .post("/api/system/users")
@@ -36,6 +44,15 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
+=======
+                .body(new RegistrationDto("vasya", "123123", "active"));
+        when()
+                .post("api/system/users")
+                .then()
+                .statusCode(200);
+
+    }
+>>>>>>> 4d61a42d42d57956668eae3016ab195a662c601b
 
     public static String getRandomLogin() {
         var login = faker.funnyName().name();
@@ -63,11 +80,19 @@ public class DataGenerator {
         }
         public static RegistrationDto notRegisteredUser (String status) {
             var notRegisteredUser = getUser("active");
+<<<<<<< HEAD
             return notRegisteredUser;
         }
         public static RegistrationDto blockedUser (String status) {
             var notRegisteredUser = getUser("blocked");
             return notRegisteredUser;
+=======
+return notRegisteredUser;
+        }
+        public static RegistrationDto blockedUser (String status) {
+            var notRegisteredUser = getUser("blocked");
+return notRegisteredUser;
+>>>>>>> 4d61a42d42d57956668eae3016ab195a662c601b
         }
     }
 
@@ -77,4 +102,8 @@ public class DataGenerator {
         String password;
         String status;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4d61a42d42d57956668eae3016ab195a662c601b
