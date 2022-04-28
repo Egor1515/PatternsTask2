@@ -27,33 +27,30 @@ class AuthTest {
         $("[data-test-id='login'] input").setValue("vasya");
         $("[data-test-id='password'] input").setValue("password");
         $(".button[role='button']").click();
-        $("App_appContainer__3jRx1").should(Condition.visible, Duration.ofSeconds(15));
+        $("[id='root'] div").should(Condition.visible);
 
     }
 
     @Test
     @DisplayName("Should get error message if login with not registered user")
     void shouldGetErrorIfNotRegisteredUser() {
-        var registeredUser = getRegisteredUser("active");
+
         var notRegisteredUser = getUser("active");
         $("[data-test-id='login'] input").setValue("oleg");
         $("[data-test-id='password'] input").setValue("p124d");
         $(".button[role='button']").click();
-        $(".notification__title").should(Condition.text("Ошибка"));
-        $(".notification__content").should(Condition.text("Неверно указан логин или пароль"));
-
+        $("[data-test-id='error-notification']").should(Condition.visible);
 
     }
 
     @Test
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
-        var blockedUser = getRegisteredUser("blocked");
-        $("[data-test-id='login'] input").setValue("vasya");
+        var blockedUser = getUser("blocked");
+        $("[data-test-id='login'] input").setValue("qweqwe");
         $("[data-test-id='password'] input").setValue("password");
         $(".button[role='button']").click();
-        $(".notification__title").should(Condition.text("Ошибка"));
-        $(".notification__content").should(Condition.text("Неверно указан логин или пароль"));
+        $("[data-test-id='error-notification']").should(Condition.visible);
 
 
     }
@@ -61,13 +58,12 @@ class AuthTest {
     @Test
     @DisplayName("Should get error message if login with wrong login")
     void shouldGetErrorIfWrongLogin() {
-        var registeredUser = getRegisteredUser("active");
+        var registeredUser = getUser("active");
         var wrongLogin = getRandomLogin();
         $("[data-test-id='login'] input").setValue(wrongLogin);
         $("[data-test-id='password'] input").setValue("password");
         $(".button[role='button']").click();
-        $(".notification__title").should(Condition.text("Ошибка"));
-        $(".notification__content").should(Condition.text("Неверно указан логин или пароль"));
+        $("[data-test-id='error-notification']").should(Condition.visible);
 
 
     }
@@ -75,13 +71,12 @@ class AuthTest {
     @Test
     @DisplayName("Should get error message if login with wrong password")
     void shouldGetErrorIfWrongPassword() {
-        var registeredUser = getRegisteredUser("active");
+        var registeredUser = getUser("active");
         var wrongPassword = getRandomPassword();
         $("[data-test-id='login'] input").setValue("vasya");
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $(".button[role='button']").click();
-        $(".notification__title").should(Condition.text("Ошибка"));
-        $(".notification__content").should(Condition.text("Неверно указан логин или пароль"));
+        $("[data-test-id='error-notification']").should(Condition.visible);
 
 
     }
