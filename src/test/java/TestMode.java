@@ -20,11 +20,11 @@ class AuthTest {
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = DataGenerator.Registration.getRegisteredUser("active");
-        $("[data-test-id='login'] input").setValue("vasya");
-        $("[data-test-id='password'] input").setValue("password");
+        $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
+        $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $(".button[role='button']").click();
         $("[id='root'] div").should(Condition.visible);
-
+        DataGenerator.sendRequest(registeredUser);
     }
 
     @Test
@@ -32,8 +32,8 @@ class AuthTest {
     void shouldGetErrorIfNotRegisteredUser() {
 
         var notRegisteredUser = DataGenerator.Registration.getUser("active");
-        $("[data-test-id='login'] input").setValue(DataGenerator.getRandomLogin());
-        $("[data-test-id='password'] input").setValue(DataGenerator.getRandomPassword());
+        $("[data-test-id='login'] input").setValue(notRegisteredUser.getLogin());
+        $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $(".button[role='button']").click();
         $("[data-test-id='error-notification']").should(Condition.visible);
 
@@ -43,12 +43,11 @@ class AuthTest {
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = DataGenerator.Registration.getUser("blocked");
-        $("[data-test-id='login'] input").setValue(DataGenerator.getRandomLogin());
-        $("[data-test-id='password'] input").setValue(DataGenerator.getRandomPassword());
+        $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
+        $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
         $(".button[role='button']").click();
         $("[data-test-id='error-notification']").should(Condition.visible);
-
-
+        ;
     }
 
     @Test
@@ -57,7 +56,7 @@ class AuthTest {
         var registeredUser = DataGenerator.Registration.getUser("active");
         var wrongLogin = DataGenerator.getRandomLogin();
         $("[data-test-id='login'] input").setValue(wrongLogin);
-        $("[data-test-id='password'] input").setValue(DataGenerator.Registration.getRegisteredUser("active").getLogin());
+        $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $(".button[role='button']").click();
         $("[data-test-id='error-notification']").should(Condition.visible);
 
@@ -68,7 +67,7 @@ class AuthTest {
     void shouldGetErrorIfWrongPassword() {
         var registeredUser = DataGenerator.Registration.getUser("active");
         var wrongPassword = DataGenerator.getRandomPassword();
-        $("[data-test-id='login'] input").setValue("vasya");
+        $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $(".button[role='button']").click();
         $("[data-test-id='error-notification']").should(Condition.visible);
