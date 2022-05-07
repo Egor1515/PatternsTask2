@@ -3,8 +3,12 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Value;
+
 import java.util.Locale;
+
 import static io.restassured.RestAssured.given;
 
 
@@ -16,6 +20,7 @@ public class DataGenerator {
         String password;
         String status;
     }
+
 
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
@@ -32,7 +37,7 @@ public class DataGenerator {
     public static void sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
-                .body(new RegistrationDto(getRandomLogin(), getRandomPassword(), "active"))
+                .body(user)
                 .when()
                 .post("/api/system/users")
                 .then()
@@ -54,7 +59,8 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getUser(String status) {
-            return new RegistrationDto(getRandomLogin(), getRandomPassword(), "active");
+            return new DataGenerator.RegistrationDto(getRandomLogin(), getRandomPassword(), "active");
+
 
         }
 
@@ -64,15 +70,15 @@ public class DataGenerator {
             return registeredUser;
         }
 
-        public static RegistrationDto notRegisteredUser(String status) {
-            var notRegisteredUser = getUser("active");
+        public static RegistrationDto getNotRegisteredUser(String status) {
+            var notRegisteredUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"active");
 
             return notRegisteredUser;
 
         }
 
-        public static RegistrationDto blockedUser(String status) {
-            var notRegisteredUser = getUser("blocked");
+        public static RegistrationDto getBlockedUser(String status) {
+            var notRegisteredUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"blocked");
             return notRegisteredUser;
 
         }
