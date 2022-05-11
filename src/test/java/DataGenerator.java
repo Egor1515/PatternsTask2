@@ -78,8 +78,9 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getBlockedUser(String status) {
-            var notRegisteredUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"blocked");
-            return notRegisteredUser;
+            var blockedUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"blocked");
+            sendRequest(blockedUser);
+            return blockedUser;
 
         }
 
