@@ -45,13 +45,11 @@ public class DataGenerator {
     }
 
     public static String getRandomLogin() {
-        var login = faker.funnyName().name();
-        return login;
+        return faker.funnyName().name();
     }
 
     public static String getRandomPassword() {
-        var password = faker.numerify("#####");
-        return password;
+        return faker.numerify("#####");
     }
 
     public static class Registration {
@@ -59,32 +57,15 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getUser(String status) {
-            return new DataGenerator.RegistrationDto(getRandomLogin(), getRandomPassword(), "active");
-
-
+            return new DataGenerator.RegistrationDto(getRandomLogin(), getRandomPassword(), status);
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
-            var registeredUser = getUser("active");
+            var registeredUser = getUser(status);
             sendRequest(registeredUser);
             return registeredUser;
-        }
-
-        public static RegistrationDto getNotRegisteredUser(String status) {
-            var notRegisteredUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"active");
-
-            return notRegisteredUser;
 
         }
-
-        public static RegistrationDto getBlockedUser(String status) {
-            var blockedUser = new RegistrationDto(getRandomLogin(),getRandomPassword(),"blocked");
-            sendRequest(blockedUser);
-            return blockedUser;
-
-        }
-
-
     }
 }
 
